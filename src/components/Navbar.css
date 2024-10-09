@@ -1,0 +1,137 @@
+/* Navbar.css */
+.navbar {
+    background-color: #333;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-img {
+    height: 40px; /* Adjust height as needed */
+    width: auto;
+    display: block;
+  }
+  
+  .navbar-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-link {
+    color: white;
+    margin-right: 20px;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar-link:hover {
+    background-color: #007bff;
+  }
+  
+  .navbar-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  .navbar-button:focus {
+    outline: none;
+  }
+  
+  /* Active link style */
+  .navbar-link.active {
+    background-color: #007bff;
+  }
+  
+  /* Responsive styling */
+  
+  /* For small devices (below 768px) */
+  @media (max-width: 768px) {
+    .navbar-container {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 0;  /* Add padding to prevent tight content */
+    }
+  
+    .navbar-links {
+      width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 10px;
+    }
+  
+    .navbar-link, .navbar-button {
+      margin: 10px 0;
+      width: 100%;
+      text-align: left;
+    }
+  
+    /* Collapse the navbar links on small screens */
+    .navbar-links {
+      display: none;  /* Initially hide links */
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .navbar-links.active {
+      display: flex;  /* Show links when 'active' class is added */
+    }
+  
+    .navbar-logo {
+      margin-bottom: 10px;  /* Add space below the logo */
+    }
+  
+    /* Hamburger Menu Button */
+    .hamburger-menu {
+      display: block;
+      cursor: pointer;
+      padding: 8px;
+    }
+  
+    /* Hamburger icon styles */
+    .hamburger-menu div {
+      background-color: #fff;
+      height: 3px;
+      width: 25px;
+      margin: 4px 0;
+    }
+  }
+  
+  /* For larger screens (above 768px) */
+  @media (min-width: 769px) {
+    .navbar-links {
+      display: flex;
+      justify-content: flex-end;
+    }
+  
+    .navbar-link, .navbar-button {
+      margin: 0 10px;
+    }
+  }
+  

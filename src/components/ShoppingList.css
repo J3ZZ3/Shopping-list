@@ -1,0 +1,126 @@
+.container { 
+    max-width: 100%; /* Allow the container to use the full width of the screen */
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.sort-buttons, .add-button {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.empty-message {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    margin-top: 20px;
+}
+
+/* Grid container for list items */
+ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+    gap: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    width: 100%; /* Ensure the list item takes up the full width of its column */
+}
+
+/* Ensure the image is responsive across all media sizes */
+.list-item img {
+    width: 100%; /* Make the image take up the full width of the list item */
+    height: auto; /* Let height adjust according to the image's width to keep aspect ratio */
+    object-fit: cover; /* Ensure the image covers the container proportionally */
+    border-radius: 8px;
+    margin-bottom: 10px;
+    max-width: 100%; /* Allow the image to scale proportionally */
+}
+
+.list-content {
+    text-align: center;
+}
+
+.list-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.action-buttons .button {
+    padding: 8px 16px;
+    background-color: #007Bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.action-buttons .button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive styling */
+
+/* For desktops above 1200px */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1500px; /* Expand the container for larger screens */
+    }
+}
+
+/* For tablets (below 1024px) */
+@media (max-width: 1024px) {
+    ul {
+        grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+    }
+}
+
+/* For mobile (below 768px) */
+@media (max-width: 768px) {
+    ul {
+        grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+    }
+}
+
+/* For smaller mobile devices (below 480px) */
+@media (max-width: 480px) {
+    ul {
+        grid-template-columns: 1fr; /* 1 item per row */
+    }
+
+    .list-item {
+        padding: 10px;
+    }
+
+    .list-item img {
+        max-height: 100px; /* Restrict height for smaller screens */
+    }
+}
