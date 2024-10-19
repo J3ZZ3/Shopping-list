@@ -28,6 +28,13 @@
       "surname": "Mashoana",
       "email": "jesse.mashoana@gmail.com",
       "password": "12345"
+    },
+    {
+      "id": "b361",
+      "name": "rex",
+      "surname": "generator",
+      "email": "rex@example.com",
+      "password": "password"
     }
   ],
   "shoppingLists": [
