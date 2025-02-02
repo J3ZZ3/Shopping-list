@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  lists: [],
+  lists: JSON.parse(localStorage.getItem('shoppingLists')) || [],
   searchKeyword: '',
   sortOption: 'name',
 };
@@ -13,16 +13,20 @@ const shoppingListSlice = createSlice({
   reducers: {
     setLists: (state, action) => {
       state.lists = action.payload;
+      localStorage.setItem('shoppingLists', JSON.stringify(action.payload));
     },
     addList: (state, action) => {
       state.lists.push(action.payload);
+      localStorage.setItem('shoppingLists', JSON.stringify(state.lists));
     },
     updateList: (state, action) => {
       const index = state.lists.findIndex(list => list.id === action.payload.id);
       state.lists[index] = action.payload;
+      localStorage.setItem('shoppingLists', JSON.stringify(state.lists));
     },
     deleteList: (state, action) => {
       state.lists = state.lists.filter(list => list.id !== action.payload);
+      localStorage.setItem('shoppingLists', JSON.stringify(state.lists));
     },
     searchLists: (state, action) => {
       state.searchKeyword = action.payload;

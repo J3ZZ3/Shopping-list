@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-  profile: null,
+  profile: JSON.parse(localStorage.getItem('profile')) || null,
 };
 
 const profileSlice = createSlice({
@@ -11,9 +11,11 @@ const profileSlice = createSlice({
   reducers: {
     setProfile: (state, action) => {
       state.profile = action.payload;
+      localStorage.setItem('profile', JSON.stringify(action.payload));
     },
     updateProfile: (state, action) => {
       state.profile = { ...state.profile, ...action.payload };
+      localStorage.setItem('profile', JSON.stringify(state.profile));
     },
   },
 });
