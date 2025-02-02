@@ -39,7 +39,7 @@ const AddEditShoppingList = () => {
       dispatch(createList(newList));
     }
     
-    navigate('/');
+    navigate('/home');
   };
 
   const handleImageUpload = (e) => {

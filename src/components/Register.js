@@ -15,7 +15,7 @@ const Register = () => {
     e.preventDefault();
     const newUser = { name, surname, email, password };
     dispatch(registerUser(newUser));
-    navigate('/');
+    navigate('/login');
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
@@ -9,27 +9,30 @@ import ShoppingList from './components/ShoppingList';
 import AddEditShoppingList from './components/AddEditShoppingList';
 import LandingPage from './components/LandingPage'; // Import LandingPage
 
-function App() {
+const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const location = useLocation();
+
+  // Determine if the navbar should be hidden
+  const hideNavbar = ["/", "/login", "/register"].includes(location.pathname);
 
   return (
-    <Router>
-      <Navbar />
+    <>
+      {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-        <Route path="/" element={isAuthenticated ? <ShoppingList /> : <LandingPage />} />
-
+        <Route path="/" element={<LandingPage />} />
         {isAuthenticated && (
           <>
             <Route path="/profile" element={<Profile />} />
+            <Route path="/home" element={<ShoppingList />} />
             <Route path="/edit/:id" element={<AddEditShoppingList />} />
             <Route path="/add" element={<AddEditShoppingList />} />
           </>
         )}
       </Routes>
-    </Router>
+    </>
   );
 }
 
