@@ -1,0 +1,183 @@
+.animated-background {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #4489ce 0%, #1ba043 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  animation: gradientBG 20s ease-in-out infinite;
+  background-size: 300% 300%;
+  transition: background 1.5s ease-in-out;
+}
+
+.background-shapes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.background-shapes .shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  mix-blend-mode: soft-light;
+  transition: all 3s ease-in-out;
+}
+
+.shape-1 {
+  width: 500px;
+  height: 500px;
+  background: #2dad78;
+  top: -200px;
+  right: -100px;
+  animation: floatSmoke1 25s infinite ease-in-out;
+}
+
+.shape-2 {
+  width: 400px;
+  height: 400px;
+  background: #1ea6af;
+  bottom: -150px;
+  left: -100px;
+  animation: floatSmoke2 30s infinite ease-in-out;
+}
+
+.shape-3 {
+  width: 450px;
+  height: 450px;
+  background: #77ee77;
+  top: 40%;
+  right: 25%;
+  animation: floatSmoke3 28s infinite ease-in-out;
+}
+
+.shape-4 {
+  width: 380px;
+  height: 380px;
+  background: #2ad3c5;
+  top: 20%;
+  left: 10%;
+  animation: floatSmoke4 32s infinite ease-in-out;
+}
+
+.shape-5 {
+  width: 420px;
+  height: 420px;
+  background: #dfd472;
+  bottom: 15%;
+  right: 15%;
+  animation: floatSmoke5 27s infinite ease-in-out;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+    background: linear-gradient(135deg, #3f87be80 0%, #1ba04380 100%);
+  }
+  25% {
+    background-position: 50% 100%;
+    background: linear-gradient(135deg, #d35b9880 0%, #23a6d580 100%);
+  }
+  50% {
+    background-position: 100% 50%;
+    background: linear-gradient(135deg, #23d5ab80 0%, #4a90e280 100%);
+  }
+  75% {
+    background-position: 50% 0%;
+    background: linear-gradient(135deg, #ee775280 0%, #e73c7e80 100%);
+  }
+  100% {
+    background-position: 0% 50%;
+    background: linear-gradient(135deg, #3f87be80 0%, #1ba04380 100%);
+  }
+}
+
+@keyframes floatSmoke1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.3;
+    background: #2dad78;
+  }
+  25% {
+    transform: translate(50px, 100px) scale(1.2) rotate(5deg);
+    opacity: 0.5;
+    background: #7c4dff;
+  }
+  50% {
+    transform: translate(100px, 0) scale(0.9) rotate(10deg);
+    opacity: 0.4;
+    background: #2196f3;
+  }
+  75% {
+    transform: translate(50px, -100px) scale(1.1) rotate(5deg);
+    opacity: 0.6;
+    background: #e91e63;
+  }
+}
+
+@keyframes floatSmoke2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.3;
+    background: #1ea6af;
+  }
+  33% {
+    transform: translate(-80px, -60px) scale(1.3) rotate(-8deg);
+    opacity: 0.5;
+    background: #ff4081;
+  }
+  66% {
+    transform: translate(80px, -30px) scale(0.8) rotate(8deg);
+    opacity: 0.4;
+    background: #4caf50;
+  }
+}
+
+@keyframes floatSmoke3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.4;
+    background: #77ee77;
+  }
+  50% {
+    transform: translate(-60px, 80px) scale(1.1) rotate(-5deg);
+    opacity: 0.6;
+    background: #9c27b0;
+  }
+}
+
+@keyframes floatSmoke4 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.3;
+    background: #2ad3c5;
+  }
+  33% {
+    transform: translate(70px, -50px) scale(1.2) rotate(10deg);
+    opacity: 0.5;
+    background: #ffc107;
+  }
+  66% {
+    transform: translate(-70px, 50px) scale(0.9) rotate(-10deg);
+    opacity: 0.4;
+    background: #009688;
+  }
+}
+
+@keyframes floatSmoke5 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.3;
+    background: #dfd472;
+  }
+  50% {
+    transform: translate(90px, -70px) scale(1.15) rotate(8deg);
+    opacity: 0.5;
+    background: #00bcd4;
+  }
+} 

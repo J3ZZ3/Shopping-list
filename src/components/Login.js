@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../features/authSlice';
+import { Link } from 'react-router-dom';
 import './Login.css'; // Import the CSS file
 
 const Login = () => {
@@ -39,6 +40,7 @@ const Login = () => {
           />
         </div>
         <button type="submit">Login</button>
+        <p className="register-link">Don't have an account? <Link to="/register">Sign up</Link></p>
       </form>
     </div>
   );

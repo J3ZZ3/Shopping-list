@@ -1,18 +1,52 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {fetchLists, removeList, searchLists, sortLists } from "../features/shoppingListSlice";
+import { fetchLists, removeList, searchLists } from "../features/shoppingListSlice";
 import { Link, useSearchParams } from "react-router-dom";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import "./ShoppingList.css";
+import ItemDetail from './ItemDetail';
 
 const ShoppingList = () => {
   const dispatch = useDispatch();
   const lists = useSelector((state) => state.shoppingList.lists);
   const userId = useSelector((state) => state.auth.user?.id);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
+
+  // Predefined categories (matching AddEditShoppingList)
+  const categories = [
+    'all',
+    'Groceries',
+    'Electronics',
+    'Clothing',
+    'Home & Garden',
+    'Books',
+    'Sports & Outdoors',
+    'Health & Beauty',
+    'Toys & Games',
+    'Pet Supplies',
+    'Office Supplies',
+    'Other'
+  ];
+
+  // Category placeholder images
+  const categoryImages = {
+    'Groceries': 'https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=200',
+    'Electronics': 'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=200',
+    'Clothing': 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=200',
+    'Home & Garden': 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=200',
+    'Books': 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=200',
+    'Sports & Outdoors': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=200',
+    'Health & Beauty': 'https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=200',
+    'Toys & Games': 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=200',
+    'Pet Supplies': 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?q=80&w=200',
+    'Office Supplies': 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=200',
+    'Other': 'https://images.unsplash.com/photo-1586769852044-692d6e3703f0?q=80&w=200'
+  };
 
   useEffect(() => {
     if (userId) {
@@ -90,8 +124,25 @@ const ShoppingList = () => {
     dispatch(searchLists(value));
   };
 
-  const handleSort = (option) => {
-    dispatch(sortLists(option));
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
+  // Filter lists based on selected category
+  const filteredLists = lists.filter(list => 
+    selectedCategory === "all" || list.category === selectedCategory
+  );
+
+  const getItemImage = (list) => {
+    return list.image || categoryImages[list.category] || categoryImages['Other'];
+  };
+
+  const handleItemClick = (list) => {
+    setSelectedItem(list);
+  };
+
+  const handleCloseDetail = () => {
+    setSelectedItem(null);
   };
 
   return (
@@ -105,18 +156,37 @@ const ShoppingList = () => {
           placeholder="Search by name..."
         />
       </div>
-      <div className="sort-buttons">
-        <button onClick={() => handleSort("name")}>Sort by Name</button>
-        <button onClick={() => handleSort("category")}>Sort by Category</button>
+      <div className="filter-section">
+        <div className="category-filter">
+          {categories.map(category => (
+            <button
+              key={category}
+              onClick={() => handleCategoryChange(category)}
+              className={`filter-button ${selectedCategory === category ? 'active' : ''}`}
+            >
+              {category === 'all' ? 'All Categories' : category}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="add-button">
         <Link to="/add">Add New List</Link>
       </div>
       <ul>
-        {lists.map((list) => (
-          <li key={list.id} className="list-item">
-            <img src={list.image} alt={list.name} className="image" />
-
+        {filteredLists.map((list) => (
+          <li 
+            key={list.id} 
+            className="list-item"
+            onClick={() => handleItemClick(list)}
+          >
+            <img 
+              src={getItemImage(list)} 
+              alt={list.category}
+              className="item-image"
+              onError={(e) => {
+                e.target.src = categoryImages['Other'];
+              }}
+            />
             <div className="list-content">
               <h3 className="list-title">{list.name}</h3>
               <p>
@@ -125,26 +195,21 @@ const ShoppingList = () => {
               <p>
                 <strong>Category:</strong> {list.category}
               </p>
-              <p>
-                <strong>Notes:</strong> {list.notes}
-              </p>
-              <div className="action-buttons">
-                <Link to={`/edit/${list.id}`}>Edit</Link>
-              </div>
-              <button onClick={() => handleDelete(list.id)} className="button">
-                Delete
-              </button>
-              <br />
-              <button
-                onClick={() => downloadShoppingListAsPDF(list.id)}
-                className="button"
-              >
-                Download as PDF
-              </button>
             </div>
           </li>
         ))}
       </ul>
+
+      {/* Use the ItemDetail component */}
+      {selectedItem && (
+        <ItemDetail
+          item={selectedItem}
+          onClose={handleCloseDetail}
+          onDelete={handleDelete}
+          getItemImage={getItemImage}
+          categoryImages={categoryImages}
+        />
+      )}
     </div>
   );
 };

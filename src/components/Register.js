@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { registerUser } from '../features/authSlice';
+import './Login.css'; // We'll reuse the Login styles
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -19,10 +20,10 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2>Register</h2>
+        <div className="form-group">
           <label>Name:</label>
           <input
             type="text"
@@ -31,7 +32,7 @@ const Register = () => {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Surname:</label>
           <input
             type="text"
@@ -40,7 +41,7 @@ const Register = () => {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Email:</label>
           <input
             type="email"
@@ -49,7 +50,7 @@ const Register = () => {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password:</label>
           <input
             type="password"
@@ -59,6 +60,7 @@ const Register = () => {
           />
         </div>
         <button type="submit">Register</button>
+        <p className="register-link">Already have an account? <Link to="/login">Login</Link></p>
       </form>
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createList, editList } from '../features/shoppingListSlice';
 import { useNavigate, useParams } from 'react-router-dom';
+import './AddEditShoppingList.css';
 
 const AddEditShoppingList = () => {
   const { id } = useParams();
@@ -15,6 +16,21 @@ const AddEditShoppingList = () => {
   const [category, setCategory] = useState('');
   const [notes, setNotes] = useState('');
   const [image, setImage] = useState(null);
+
+  // Predefined categories
+  const categories = [
+    'Groceries',
+    'Electronics',
+    'Clothing',
+    'Home & Garden',
+    'Books',
+    'Sports & Outdoors',
+    'Health & Beauty',
+    'Toys & Games',
+    'Pet Supplies',
+    'Office Supplies',
+    'Other'
+  ];
 
   useEffect(() => {
     if (id) {
@@ -38,7 +54,6 @@ const AddEditShoppingList = () => {
     } else {
       dispatch(createList(newList));
     }
-    
     navigate('/home');
   };
 
@@ -54,57 +69,78 @@ const AddEditShoppingList = () => {
   };
 
   return (
-    <div>
-      <h2>{id ? 'Edit Shopping List' : 'Add Shopping List'}</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="add-edit-container">
+      <h2 className="heading">{id ? 'Edit Item' : 'Add Item'}</h2>
+      <form onSubmit={handleSubmit} className="add-edit-form">
+        <div className="form-group">
           <label>Name:</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            className="form-input"
+            placeholder="Enter list name"
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Quantity:</label>
           <input
-            type="number"
+            type="text"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
             required
+            className="form-input"
+            placeholder="Enter quantity"
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Category:</label>
-          <input
-            type="text"
+          <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
-          />
+            className="form-select"
+          >
+            <option value="">Select a category</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
         </div>
-        <div>
-          <label>Notes (optional):</label>
+        <div className="form-group">
+          <label>Notes:</label>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
+            className="form-textarea"
+            placeholder="Add any additional notes"
           />
         </div>
-        <div>
-          <label>Image (optional):</label>
+        <div className="form-group">
+          <label>Image URL:</label>
           <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
+            type="text"
+            value={image || ''}
+            onChange={(e) => setImage(e.target.value)}
+            className="form-input"
+            placeholder="Enter image URL"
           />
         </div>
-        {image && (
-          <div>
-            <img src={image} alt="Preview" style={{ width: '100px', height: '100px' }} />
-          </div>
-        )}
-        <button type="submit">{id ? 'Update' : 'Add'} List</button>
+        <div className="form-actions">
+          <button type="submit" className="submit-button">
+            {id ? 'Update List' : 'Create List'}
+          </button>
+          <button 
+            type="button" 
+            onClick={() => navigate('/home')} 
+            className="cancel-button"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
