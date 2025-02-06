@@ -6,6 +6,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import "./ShoppingList.css";
 import ItemDetail from './ItemDetail';
+import ItemCard from './ItemCard';
 
 const ShoppingList = () => {
   const dispatch = useDispatch();
@@ -146,71 +147,69 @@ const ShoppingList = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="heading">Shopping Lists</h2>
-      <div className="empty-message">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearch}
-          placeholder="Search by name..."
-        />
-      </div>
-      <div className="filter-section">
-        <div className="category-filter">
-          {categories.map(category => (
-            <button
-              key={category}
-              onClick={() => handleCategoryChange(category)}
-              className={`filter-button ${selectedCategory === category ? 'active' : ''}`}
-            >
-              {category === 'all' ? 'All Categories' : category}
-            </button>
-          ))}
+    <>
+      <nav className="navbar">
+        <Link to="/" className="navbar-brand">
+          Shopping List App
+        </Link>
+        <div className="navbar-links">
+          <Link to="/" className="navbar-link active">
+            Home
+          </Link>
+          <Link to="/add" className="navbar-link">
+            Add Item
+          </Link>
         </div>
-      </div>
-      <div className="add-button">
-        <Link to="/add">Add New List</Link>
-      </div>
-      <ul>
-        {filteredLists.map((list) => (
-          <li 
-            key={list.id} 
-            className="list-item"
-            onClick={() => handleItemClick(list)}
-          >
-            <img 
-              src={getItemImage(list)} 
-              alt={list.category}
-              className="item-image"
-              onError={(e) => {
-                e.target.src = categoryImages['Other'];
-              }}
+      </nav>
+      <div className="container">
+        <h2 className="heading">Shopping Lists</h2>
+        <div className="empty-message">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearch}
+            placeholder="Search by name..."
+          />
+        </div>
+        <div className="filter-section">
+          <div className="category-filter">
+            {categories.map(category => (
+              <button
+                key={category}
+                onClick={() => handleCategoryChange(category)}
+                className={`filter-button ${selectedCategory === category ? 'active' : ''}`}
+              >
+                {category === 'all' ? 'All Categories' : category}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="add-button">
+          <Link to="/add">Add New List</Link>
+        </div>
+        <ul>
+          {filteredLists.map((list) => (
+            <ItemCard
+              key={list.id}
+              item={list}
+              onClick={handleItemClick}
+              getItemImage={getItemImage}
+              categoryImages={categoryImages}
             />
-            <div className="list-content">
-              <h3 className="list-title">{list.name}</h3>
-              <p>
-                <strong>Quantity:</strong> {list.quantity}
-              </p>
-              <p>
-                <strong>Category:</strong> {list.category}
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
+          ))}
+        </ul>
 
-      {/* Use the ItemDetail component */}
-      {selectedItem && (
-        <ItemDetail
-          item={selectedItem}
-          onClose={handleCloseDetail}
-          onDelete={handleDelete}
-          getItemImage={getItemImage}
-          categoryImages={categoryImages}
-        />
-      )}
-    </div>
+        {selectedItem && (
+          <ItemDetail
+            item={selectedItem}
+            onClose={handleCloseDetail}
+            onDelete={handleDelete}
+            getItemImage={getItemImage}
+            categoryImages={categoryImages}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

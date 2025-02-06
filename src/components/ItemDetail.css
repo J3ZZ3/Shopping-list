@@ -80,11 +80,13 @@
     display: flex;
     gap: 15px;
     margin-top: 25px;
+    align-items: stretch;
 }
 
 .edit-button, .delete-button {
     flex: 1;
-    padding: 12px 24px;
+    height: 45px;
+    padding: 0 24px;
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
