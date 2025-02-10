@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Demo User",
+      "surname": "Test",
+      "email": "demo@example.com",
+      "password": "password123"
+    }
+  ],
+  "shoppingLists": [
+    {
+      "id": "1",
+      "name": "Groceries",
+      "quantity": "5",
+      "category": "Food",
+      "notes": "Weekly shopping",
+      "image": null,
+      "userId": "1"
+    }
+  ]
+} 
