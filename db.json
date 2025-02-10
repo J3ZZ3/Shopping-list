@@ -49,6 +49,13 @@
       "surname": "him",
       "email": "lopo@lopo.com",
       "password": "123456"
+    },
+    {
+      "id": "95fe",
+      "name": "werpo",
+      "surname": "ada",
+      "email": "hekir77682@perceint.com",
+      "password": "123456"
     }
   ],
   "shoppingLists": [

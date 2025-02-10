@@ -148,19 +148,6 @@ const ShoppingList = () => {
 
   return (
     <>
-      <nav className="navbar">
-        <Link to="/" className="navbar-brand">
-          Shopping List App
-        </Link>
-        <div className="navbar-links">
-          <Link to="/" className="navbar-link active">
-            Home
-          </Link>
-          <Link to="/add" className="navbar-link">
-            Add Item
-          </Link>
-        </div>
-      </nav>
       <div className="container">
         <h2 className="heading">Shopping Lists</h2>
         <div className="empty-message">

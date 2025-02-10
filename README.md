@@ -35,17 +35,13 @@ The Shopping List App is a web application that allows users to create, manage, 
    npm install
    ```
 
-3. **Run the JSON server** (for mock API):
+3. **Run the JSON server and React application** (for mock API):
    ```bash
-   npm run server
+   npm run dev
    ```
-   This will start the JSON server on `http://localhost:5000`.
+   This will start the JSON server on `http://localhost:5000` and the React application on `http://localhost:3000`.
 
-4. **Start the React application**:
-   ```bash
-   npm start
-   ```
-   The app will be running on `http://localhost:3000`.
+
 
 ## Usage
 - **Login**: Use the credentials of an existing user or register a new account.
