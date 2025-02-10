@@ -49,6 +49,13 @@
       "surname": "him",
       "email": "lopo@lopo.com",
       "password": "123456"
+    },
+    {
+      "id": "b1b8",
+      "name": "oppo",
+      "surname": "dupo",
+      "email": "example@example.com",
+      "password": ""
     }
   ],
   "shoppingLists": [

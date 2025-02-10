@@ -75,50 +75,6 @@ const ShoppingList = () => {
     img.src = url;
   };
 
-  
-  const downloadShoppingListAsPDF = (id) => {
-    const doc = new jsPDF();
-    const list = lists.find((list) => list.id === id);
-
-    
-    doc.text("Shopping List", 20, 20);
-
-    
-    if (list.image) {
-      getImageAsBase64(list.image, (base64Image, imgWidth, imgHeight) => {
-        const maxWidth = 50; 
-        const maxHeight = 50; 
-
-        
-        let scaleFactor = Math.min(maxWidth / imgWidth, maxHeight / imgHeight);
-
-        
-        let scaledWidth = imgWidth * scaleFactor;
-        let scaledHeight = imgHeight * scaleFactor;
-
-        doc.addImage(base64Image, "PNG", 20, 40, scaledWidth, scaledHeight);
-
-        const textXPosition = 90; 
-        const textYPosition = 40;
-
-        doc.text(`Name: ${list.name}`, textXPosition, textYPosition);
-        doc.text(`Quantity: ${list.quantity}`, textXPosition, textYPosition + 10);
-        doc.text(`Category: ${list.category}`, textXPosition, textYPosition + 20);
-        doc.text(`Notes: ${list.notes}`, textXPosition, textYPosition + 30);
-
-        
-        doc.save(`${list.name}-shopping-list.pdf`);
-      });
-    } else {
-      doc.text(`Name: ${list.name}`, 20, 40);
-      doc.text(`Quantity: ${list.quantity}`, 20, 50);
-      doc.text(`Category: ${list.category}`, 20, 60);
-      doc.text(`Notes: ${list.notes}`, 20, 70);
-
-      doc.save(`${list.name}-shopping-list.pdf`);
-    }
-  };
-
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearchParams({ search: value });
@@ -146,21 +102,32 @@ const ShoppingList = () => {
     setSelectedItem(null);
   };
 
+  const downloadAllItemsAsPDF = () => {
+    const doc = new jsPDF();
+    
+    lists.forEach((list, index) => {
+      doc.text(`Item ${index + 1}: ${list.name}`, 20, 20 + (index * 10));
+      doc.text(`Quantity: ${list.quantity}`, 20, 25 + (index * 10));
+      doc.text(`Category: ${list.category}`, 20, 30 + (index * 10));
+      doc.text(`Notes: ${list.notes}`, 20, 35 + (index * 10));
+      
+      if (list.image) {
+        getImageAsBase64(list.image, (base64Image, imgWidth, imgHeight) => {
+          const maxWidth = 50; 
+          const maxHeight = 50; 
+          let scaleFactor = Math.min(maxWidth / imgWidth, maxHeight / imgHeight);
+          let scaledWidth = imgWidth * scaleFactor;
+          let scaledHeight = imgHeight * scaleFactor;
+          doc.addImage(base64Image, "PNG", 20, 40 + (index * 10), scaledWidth, scaledHeight);
+        });
+      }
+    });
+
+    doc.save('shopping-lists.pdf');
+  };
+
   return (
     <>
-      <nav className="navbar">
-        <Link to="/" className="navbar-brand">
-          Shopping List App
-        </Link>
-        <div className="navbar-links">
-          <Link to="/" className="navbar-link active">
-            Home
-          </Link>
-          <Link to="/add" className="navbar-link">
-            Add Item
-          </Link>
-        </div>
-      </nav>
       <div className="container">
         <h2 className="heading">Shopping Lists</h2>
         <div className="empty-message">
@@ -184,20 +151,39 @@ const ShoppingList = () => {
             ))}
           </div>
         </div>
-        <div className="add-button">
-          <Link to="/add">Add New List</Link>
+        <div className="button-container" style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
+          <div className="add-button">
+            <Link to="/add">Add New Item</Link>
+          </div>
+          <div className="add-button">
+            <Link to="#" onClick={() => lists.length > 0 ? downloadAllItemsAsPDF() : alert('No items to download.')}>Download Lists</Link>
+          </div>
         </div>
-        <ul>
-          {filteredLists.map((list) => (
-            <ItemCard
-              key={list.id}
-              item={list}
-              onClick={handleItemClick}
-              getItemImage={getItemImage}
-              categoryImages={categoryImages}
-            />
-          ))}
-        </ul>
+        {filteredLists.length === 0 ? (
+          <div className="empty-list-message" style={{ textAlign: 'center',
+            fontSize: '20px',
+            fontWeight: 'bold',
+            color: '#333',
+            marginTop: '20px',
+            marginBottom: '20px',
+            padding: '20px',
+            border: '1px solid #ddd',
+           }}>
+            <p>🛒 Your shopping list is empty. Please add items to get started!</p>
+          </div>
+        ) : (
+          <ul>
+            {filteredLists.map((list) => (
+              <ItemCard
+                key={list.id}
+                item={list}
+                onClick={handleItemClick}
+                getItemImage={getItemImage}
+                categoryImages={categoryImages}
+              />
+            ))}
+          </ul>
+        )}
 
         {selectedItem && (
           <ItemDetail
